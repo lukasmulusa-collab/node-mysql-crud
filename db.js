@@ -1,14 +1,11 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-console.log('Connecting to DB Host:', process.env.DB_HOST);
-console.log('Connecting as DB User:', process.env.DB_USER);
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT) || 28737,
   user: process.env.DB_USER,
-  password: String(process.env.DB_PASSWORD || '').trim(),
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME || 'defaultdb',
   waitForConnections: true,
   connectionLimit: 10,
@@ -18,4 +15,22 @@ const pool = mysql.createPool({
   }
 });
 
-module.exports = pool.promise();
+const promisePool = pool.promise();
+
+// Automatically create portfolio table if it doesn't exist
+const createTableQuery = `
+  CREATE TABLE IF NOT EXISTS portfolio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(500),
+    project_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`;
+
+promisePool.query(createTableQuery)
+  .then(() => console.log('Portfolio table verified/created successfully.'))
+  .catch(err => console.error('Error creating table:', err));
+
+module.exports = promisePool;
