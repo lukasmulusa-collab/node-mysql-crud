@@ -17,7 +17,7 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-// Automatically create portfolio table if it doesn't exist
+// SQL Query to create the portfolio table automatically if missing
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS portfolio (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -30,7 +30,7 @@ const createTableQuery = `
 `;
 
 promisePool.query(createTableQuery)
-  .then(() => console.log('Portfolio table verified/created successfully.'))
-  .catch(err => console.error('Error creating table:', err));
+  .then(() => console.log('Portfolio table ready.'))
+  .catch((err) => console.error('Error creating table:', err));
 
 module.exports = promisePool;
