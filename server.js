@@ -1,3 +1,6 @@
+
+// Import database connection and auto-table setup
+require('./db.js');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
