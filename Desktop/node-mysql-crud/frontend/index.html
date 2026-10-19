@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio CRUD Manager</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; background: #f4f6f9; }
+    h2 { color: #333; }
+    form { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input { display: block; width: 95%; margin-bottom: 10px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 8px 16px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background: #007bff; color: #fff; }
+    .btn-delete { background: #dc3545; }
+    .btn-delete:hover { background: #a71d2a; }
+  </style>
+</head>
+<body>
+  <h2>Portfolio Single-Table CRUD</h2>
+
+  <form id="crud-form">
+    <input type="hidden" id="record-id">
+    <input type="text" id="owner_name" placeholder="Owner Name" required>
+    <input type="text" id="title" placeholder="Project Title" required>
+    <input type="text" id="category" placeholder="Category" required>
+    <input type="text" id="skills" placeholder="Skills" required>
+    <input type="url" id="project_url" placeholder="Project URL">
+    <button type="submit" id="save-btn">Save Record</button>
+    <button type="button" id="cancel-btn" style="display:none; background:#6c757d;">Cancel</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Owner Name</th>
+        <th>Project Title</th>
+        <th>Category</th>
+        <th>Skills</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="data-table"></tbody>
+  </table>
+
+  <script src="app.js"></script>
+</body>
+</html>
