@@ -40,11 +40,11 @@ app.get(`/api/${RESOURCE}/:id`, async (req, res) => {
 
 // 3. POST CREATE
 app.post(`/api/${RESOURCE}`, async (req, res) => {
-  const { owner_name, title, category, skills, project_url } = req.body;
+  const { title, category, skills, project_url } = req.body;
   try {
     const [result] = await db.query(
-      `INSERT INTO ${RESOURCE} (owner_name, title, category, skills, project_url) VALUES (?, ?, ?, ?, ?)`,
-      [owner_name, title, category, skills, project_url]
+      `INSERT INTO ${RESOURCE} (title, category, skills, project_url) VALUES (?, ?, ?, ?)`,
+      [title, category, skills, project_url]
     );
     res.status(201).json({ id: result.insertId, ...req.body });
   } catch (err) {
@@ -54,11 +54,11 @@ app.post(`/api/${RESOURCE}`, async (req, res) => {
 
 // 4. PUT UPDATE
 app.put(`/api/${RESOURCE}/:id`, async (req, res) => {
-  const { owner_name, title, category, skills, project_url } = req.body;
+  const { title, category, skills, project_url } = req.body;
   try {
     const [result] = await db.query(
-      `UPDATE ${RESOURCE} SET owner_name=?, title=?, category=?, skills=?, project_url=? WHERE id=?`,
-      [owner_name, title, category, skills, project_url, req.params.id]
+      `UPDATE ${RESOURCE} SET title=?, category=?, skills=?, project_url=? WHERE id=?`,
+      [title, category, skills, project_url, req.params.id]
     );
     if (result.affectedRows === 0) return res.status(404).json({ message: 'Record not found' });
     res.json({ id: req.params.id, ...req.body });
