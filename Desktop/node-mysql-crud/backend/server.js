@@ -17,6 +17,21 @@ app.get('/', (req, res) => {
 
 const RESOURCE = 'portfolio';
 
+// TEMPORARY DB MIGRATION ROUTE: Adds missing columns to Aiven MySQL table
+app.get('/api/fix-db', async (req, res) => {
+  try {
+    await db.query(`
+      ALTER TABLE ${RESOURCE} 
+      ADD COLUMN owner_name VARCHAR(255),
+      ADD COLUMN category VARCHAR(255),
+      ADD COLUMN skills VARCHAR(255)
+    `);
+    res.send("Columns added successfully!");
+  } catch (err) {
+    res.status(500).send("DB Fix Status: " + err.message);
+  }
+});
+
 // 1. GET ALL
 app.get(`/api/${RESOURCE}`, async (req, res) => {
   try {
